@@ -1,6 +1,5 @@
 package br.com.sapereaude.maskedEditText;
 
-
 public class RawText {
 	private String text;
 	
@@ -21,10 +20,28 @@ public class RawText {
 		text = firstPart.concat(lastPart);
 	}
 
-	public int addToString(String string, int start, int maxLength) {
+	/**
+	 * 
+	 * @param newString New String to be added
+	 * @param start Position to insert newString
+	 * @param maxLength Maximum raw text length
+	 * @return Number of added characters
+	 */
+	public int addToString(String newString, int start, int maxLength) {
 		String firstPart = "";
 		String lastPart = "";
-		int count = string.length();
+		
+		if(newString == null || newString.equals("")) {
+			return 0;
+		}
+		else if(start < 0) {
+			throw new IllegalArgumentException("Start position must be non-negative");
+		}
+		else if(start > text.length()) {
+			throw new IllegalArgumentException("Start position must be less than the actual text length");
+		}
+		
+		int count = newString.length();
 		
 		if(start > 0) {
 			firstPart = text.substring(0, start);
@@ -32,11 +49,11 @@ public class RawText {
 		if(start >= 0 && start < text.length()) {
 			lastPart = text.substring(start, text.length());
 		}
-		if(text.length() + string.length() > maxLength) {
+		if(text.length() + newString.length() > maxLength) {
 			count = maxLength - text.length();
-			string = string.substring(0, count);
+			newString = newString.substring(0, count);
 		}
-		text = firstPart.concat(string).concat(lastPart);		
+		text = firstPart.concat(newString).concat(lastPart);		
 		return count;
 	}
 

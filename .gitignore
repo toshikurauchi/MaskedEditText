@@ -1,6 +1,6 @@
 *.apk
 *.class
 *.dex
-*/bin/*
-*/gen/*
-*/tmp/*
+bin/*
+gen/*
+tmp/*
