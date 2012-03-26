@@ -26,12 +26,12 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	private boolean ignore;
 	protected int maxRawLength;
 	
-//	public MaskedEditText(Context context) {
-//		super(context);
-//		init();
+	public MaskedEditText(Context context) {
+		super(context);
+		init();
 //		mask = "";
 //		charRepresentation = "";
-//	}
+	}
 	
 	public MaskedEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -74,6 +74,11 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				return true;
 			}
 		});
+	}
+	
+	public MaskedEditText(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		init();
 	}
 
 	private void generatePositionArrays() {

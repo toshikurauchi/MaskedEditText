@@ -1,5 +1,6 @@
 *.apk
 *.class
 *.dex
-bin/res
-gen/*
+*/bin/*
+*/gen/*
+*/tmp/*
