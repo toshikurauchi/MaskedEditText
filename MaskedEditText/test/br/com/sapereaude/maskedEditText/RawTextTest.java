@@ -58,4 +58,28 @@ public class RawTextTest {
 	public void addStringToPositionLargerThanLength() throws Exception {
 		rawText.addToString("test", 10, 5);
 	}
+	
+	@Test
+	public void insertStringInTheMiddle() throws Exception {
+		String expected = "insert text here";
+		rawText.addToString("insert here", 0, 20);
+		rawText.addToString("text ", 7, 20);
+		assertEquals(expected, rawText.getText());
+	}
+	
+	@Test
+	public void insertAsMuchAsItFitsIntoString() throws Exception {
+		String expected = "insert text here";
+		rawText.addToString("insert here", 0, expected.length());
+		rawText.addToString("text larger than maximum", 7, expected.length());
+		assertEquals(expected, rawText.getText());
+	}
+	
+	@Test
+	public void doesntInsertAnythingIfItDoesntFit() throws Exception {
+		String maximum = "maximum";
+		rawText.addToString(maximum, 0, maximum.length());
+		rawText.addToString("this shouldnt be inserted", maximum.length()/2, maximum.length());
+		assertEquals(maximum, rawText.getText());
+	}
 }
