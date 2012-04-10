@@ -29,13 +29,10 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	public MaskedEditText(Context context) {
 		super(context);
 		init();
-//		mask = "";
-//		charRepresentation = "";
 	}
 	
 	public MaskedEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initialized = false;
 		init();
 		
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MaskedEditText);
@@ -54,7 +51,6 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		rawText = new RawText();
 		selection = rawToMask[0];
 		this.setText(mask.replace(charRepresentation, ' '));
-		ignore = false;
 		maxRawLength = maskToRaw[previousValidPosition(mask.length() - 1)] + 1;
 		initialized = true;
 		
@@ -80,7 +76,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		super(context, attrs, defStyle);
 		init();
 	}
-
+	
 	private void generatePositionArrays() {
 		int[] aux = new int[mask.length()];
 		maskToRaw = new int[mask.length()];
@@ -114,9 +110,6 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	
 	private void init() {
 		addTextChangedListener(this);
-		editingAfter = false;
-		editingBefore = false;
-		editingOnChanged = false;
 	}
 	
 	@Override
