@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package br.com.sapereAude.maskedEditText;
+package br.com.sapereaude.maskedEditText;
 
 public final class R {
     public static final class attr {
@@ -32,6 +32,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int cpfEdit=0x7f050001;
+        public static final int dateEdit=0x7f050002;
         public static final int phoneEdit=0x7f050000;
     }
     public static final class layout {
@@ -48,8 +49,8 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #MaskedEditText_char_representation br.com.sapereAude.maskedEditText:char_representation}</code></td><td></td></tr>
-           <tr><td><code>{@link #MaskedEditText_mask br.com.sapereAude.maskedEditText:mask}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaskedEditText_char_representation br.com.sapereaude.maskedEditText:char_representation}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaskedEditText_mask br.com.sapereaude.maskedEditText:mask}</code></td><td></td></tr>
            </table>
            @see #MaskedEditText_char_representation
            @see #MaskedEditText_mask
@@ -58,7 +59,7 @@ containing a value of this type.
             0x7f010000, 0x7f010001
         };
         /**
-          <p>This symbol is the offset where the {@link br.com.sapereAude.maskedEditText.R.attr#char_representation}
+          <p>This symbol is the offset where the {@link br.com.sapereaude.maskedEditText.R.attr#char_representation}
           attribute's value can be found in the {@link #MaskedEditText} array.
 
 
@@ -72,7 +73,7 @@ containing a value of this type.
         */
         public static final int MaskedEditText_char_representation = 1;
         /**
-          <p>This symbol is the offset where the {@link br.com.sapereAude.maskedEditText.R.attr#mask}
+          <p>This symbol is the offset where the {@link br.com.sapereaude.maskedEditText.R.attr#mask}
           attribute's value can be found in the {@link #MaskedEditText} array.
 
 

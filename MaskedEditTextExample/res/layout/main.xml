@@ -3,8 +3,7 @@
 	xmlns:custom_edit="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent">
 <br.com.sapereaude.maskedEditText.MaskedEditText
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
@@ -18,5 +17,13 @@
     custom_edit:mask="###.###.###-##"
     android:inputType="number"
 	android:id="@+id/cpfEdit"
+    />
+<br.com.sapereaude.maskedEditText.MaskedEditText
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    custom_edit:mask="##/##/####"
+    android:hint="01/09/1989"
+    android:inputType="number"
+	android:id="@+id/dateEdit"
     />
 </LinearLayout>

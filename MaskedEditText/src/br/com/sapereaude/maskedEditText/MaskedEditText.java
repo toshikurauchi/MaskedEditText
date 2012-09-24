@@ -53,7 +53,11 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		
 		rawText = new RawText();
 		selection = rawToMask[0];
-		this.setText(mask.replace(charRepresentation, ' '));
+		
+		if(!hasHint()) {
+			this.setText(mask.replace(charRepresentation, ' '));
+		}
+		
 		ignore = false;
 		maxRawLength = maskToRaw[previousValidPosition(mask.length() - 1)] + 1;
 		initialized = true;
@@ -61,7 +65,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus()) {
+				if(hasFocus() && (rawText.length() > 0 || !hasHint())) {
 					MaskedEditText.this.setSelection(lastValidPosition());
 				}
 			}
@@ -74,6 +78,10 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				return true;
 			}
 		});
+	}
+
+	private boolean hasHint() {
+		return getHint() != null;
 	}
 	
 	public MaskedEditText(Context context, AttributeSet attrs, int defStyle) {
@@ -159,7 +167,12 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	public void afterTextChanged(Editable s) {
 		if(!editingAfter && editingBefore && editingOnChanged) {
 			editingAfter = true;
-			setText(makeMaskedText());
+			if(rawText.length() == 0 && hasHint()) {
+				setText(null);
+			}
+			else {
+				setText(makeMaskedText());
+			}
 			
 			setSelection(selection);
 			

@@ -18,7 +18,7 @@
 		<link>
 			<name>test</name>
 			<type>2</type>
-			<location>/home/toshi/androidWorkspace/MaskedEditText/MaskedEditTextExample/test</location>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/MaskedEditTextExample/test</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
