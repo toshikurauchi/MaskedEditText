@@ -5,14 +5,9 @@
 
 MakedEditText is a simple Android EditText with customizable input mask support.
 
-### Setup
+### JAR
 
-1. Clone the project into your workspace
-2. Import it as an Eclipse project.
-3. Then in __your__ project properties select _Android -> Add_
-4. Select MaskedEditText
-5. Click _ok_
-6. Click _ok_ :)
+If you want only the jar file it is available [here](https://github.com/toshikurauchi/MaskedEditText/blob/master/MaskedEditText/bin/maskededittext.jar).
 
 ### Usage
 
@@ -35,20 +30,27 @@ You can optionally set the representation character (in case you don't want to u
         mask:mask="ccc.ccc.ccc-cc"
         mask:char_representation="c"
     />
+
+You can also change the mask and the representation character programatically:
+
+	MaskedEditText editText = (MaskedEditText) findViewById(R.id.my_edit_text)
+	// Setting the representation character to '$'
+	editText.setCharRepresentation('$');
+	// Logging the representation character
+	Log.i("Representation character", editText.getCharRepresentation());
+	// Setting the mask
+	editText.setMask("##/##/####");
+	// Logging the mask
+	Log.i("Mask", editText.getMask());
     
 *************************************************************************************************
 ## pt_BR
 
 MaskedEditText é um EditText do Android com suporte a máscaras de texto customizáveis.
 
-### Setup
+### JAR
 
-1. Clone o projeto em seu workspace
-2. Importe-o como um projeto do Eclipse
-3. Nas _properties_ do __seu__ projeto selecione _Android -> Add_
-4. Selecione MaskedEditText
-5. Clique _ok_
-6. Clique _ok_ :)
+Se você quiser somente o arquivo jar ele está disponível [aqui](https://github.com/toshikurauchi/MaskedEditText/blob/master/MaskedEditText/bin/maskededittext.jar).
 
 ### Como usar
 
@@ -71,3 +73,15 @@ Caso seja do seu interesse você pode mudar o caracter de representação (se vo
         mask:mask="ccc.ccc.ccc-cc"
         mask:char_representation="c"
     />
+
+Você também pode mudar a máscara e o caracter de representação programaticamente:
+
+	MaskedEditText editText = (MaskedEditText) findViewById(R.id.meu_edit_text)
+	// Setando o caracter de representação para '$'
+	editText.setCharRepresentation('$');
+	// Logando o caracter de representação
+	Log.i("Caracter de representação", editText.getCharRepresentation());
+	// Setando a máscara
+	editText.setMask("##/##/####");
+	// Logando a máscara
+	Log.i("Mascara", editText.getMask());
