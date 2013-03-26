@@ -25,6 +25,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	private boolean initialized;
 	private boolean ignore;
 	protected int maxRawLength;
+	private int lastValidMaskPosition;
 	
 	public MaskedEditText(Context context) {
 		super(context);
@@ -46,26 +47,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 			charRepresentation = representation.charAt(0);
 		}
 		
-		generatePositionArrays();
-		
-		rawText = new RawText();
-		selection = rawToMask[0];
-
-		if(!hasHint()) {
-			this.setText(mask.replace(charRepresentation, ' '));
-		}
-		
-		maxRawLength = maskToRaw[previousValidPosition(mask.length() - 1)] + 1;
-		initialized = true;
-		
-		setOnFocusChangeListener(new OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus() && (rawText.length() > 0 || !hasHint())) {
-					MaskedEditText.this.setSelection(lastValidPosition());
-				}
-			}
-		});
+		cleanUp();
 		
 		// Ignoring enter key presses
 		setOnEditorActionListener(new OnEditorActionListener() {
@@ -76,6 +58,48 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		});
 	}
 
+	private void cleanUp() {
+		initialized = false;
+		
+		generatePositionArrays();
+		
+		rawText = new RawText();
+		selection = rawToMask[0];
+
+		editingBefore = true;
+		editingOnChanged = true;
+		editingAfter = true;
+		if(hasHint()) {
+			this.setText(null);
+		}
+		else {
+			this.setText(mask.replace(charRepresentation, ' '));
+		}
+		editingBefore = false;
+		editingOnChanged = false;
+		editingAfter = false;
+		
+		maxRawLength = maskToRaw[previousValidPosition(mask.length() - 1)] + 1;
+		lastValidMaskPosition = findLastValidMaskPosition();
+		initialized = true;
+		
+		setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus() && (rawText.length() > 0 || !hasHint())) {
+					MaskedEditText.this.setSelection(lastValidPosition());
+				}
+			}
+		});
+	}
+
+	private int findLastValidMaskPosition() {
+		for(int i = maskToRaw.length - 1; i >= 0; i--) {
+			if(maskToRaw[i] != -1) return i;
+		}
+		throw new RuntimeException("Mask contains only the representation char");
+	}
+
 	private boolean hasHint() {
 		return getHint() != null;
 	}
@@ -83,6 +107,24 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	public MaskedEditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
+	}
+	
+	public void setMask(String mask) {
+		this.mask = mask;
+		cleanUp();
+	}
+	
+	public String getMask() {
+		return this.mask;
+	}
+	
+	public void setCharRepresentation(char charRepresentation) {
+		this.charRepresentation = charRepresentation;
+		cleanUp();
+	}
+	
+	public char getCharRepresentation() {
+		return this.charRepresentation;
 	}
 	
 	private void generatePositionArrays() {
@@ -125,10 +167,14 @@ public class MaskedEditText extends EditText implements TextWatcher {
 			int after) {
 		if(!editingBefore) {
 			editingBefore = true;
-			if(start >= mask.length()) {
+			if(start > lastValidMaskPosition) {
 				ignore = true;
 			}
-			Range range = calculateRange(start, start + count);
+			int rangeStart = start;
+			if(after == 0) {
+				rangeStart = erasingStart(start);
+			}
+			Range range = calculateRange(rangeStart, start + count);
 			if(range.getStart() != -1) {
 				rawText.subtractFromString(range);
 			}
@@ -136,6 +182,13 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				selection = previousValidPosition(start);
 			}
 		}
+	}
+
+	private int erasingStart(int start) {
+		while(start > 0 && maskToRaw[start] == -1) {
+			start--;
+		}
+		return start;
 	}
 
 	@Override
@@ -150,7 +203,12 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				String addedString = s.subSequence(start, start + count).toString();
 				count = rawText.addToString(clear(addedString), startingPosition, maxRawLength);
 				if(initialized) {
-					selection = nextValidPosition(start + count);
+					int currentPosition;
+					if(startingPosition + count < rawToMask.length) 
+						currentPosition = rawToMask[startingPosition + count];
+					else
+						currentPosition = lastValidMaskPosition + 1;
+					selection = nextValidPosition(currentPosition);
 				}
 			}
 		}
@@ -161,6 +219,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		if(!editingAfter && editingBefore && editingOnChanged) {
 			editingAfter = true;
 			if(rawText.length() == 0 && hasHint()) {
+				selection = 0;
 				setText(null);
 			}
 			else {
@@ -179,8 +238,14 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	@Override
 	protected void onSelectionChanged(int selStart, int selEnd) {
 		if(initialized) {
-			selStart = fixSelection(selStart);
-			selEnd = fixSelection(selEnd);
+			if(rawText.length() == 0 && hasHint()) {
+				selStart = 0;
+				selEnd = 0;
+			}
+			else {
+				selStart = fixSelection(selStart);
+				selEnd = fixSelection(selEnd);
+			}
 			setSelection(selStart, selEnd);
 		}
 		super.onSelectionChanged(selStart, selEnd);
@@ -196,9 +261,10 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	}
 
 	private int nextValidPosition(int currentPosition) {
-		while(currentPosition < maskToRaw.length && maskToRaw[currentPosition] == -1) {
+		while(currentPosition < lastValidMaskPosition && maskToRaw[currentPosition] == -1) {
 			currentPosition++;
 		}
+		if(currentPosition > lastValidMaskPosition) return lastValidMaskPosition + 1;
 		return currentPosition;
 	}
 	

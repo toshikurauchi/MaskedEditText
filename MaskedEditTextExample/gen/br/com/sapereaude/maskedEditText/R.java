@@ -31,6 +31,8 @@ containing a value of this type.
         public static final int icon=0x7f020001;
     }
     public static final class id {
+        public static final int charRepButton=0x7f050004;
+        public static final int charRepresentation=0x7f050003;
         public static final int cpfEdit=0x7f050001;
         public static final int dateEdit=0x7f050002;
         public static final int phoneEdit=0x7f050000;

@@ -3,7 +3,7 @@
 	xmlns:custom_edit="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res/br.com.sapereaude.maskedEditText">
 <br.com.sapereaude.maskedEditText.MaskedEditText
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
@@ -26,4 +26,27 @@
     android:inputType="number"
 	android:id="@+id/dateEdit"
     />
+<LinearLayout 
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+    <br.com.sapereaude.maskedEditText.MaskedEditText
+    android:layout_width="0dp" 
+    android:layout_height="wrap_content" 
+    android:layout_weight="3"
+    custom_edit:mask="abababab"
+    android:hint="abababab"
+    app:char_representation="a"
+	android:id="@+id/charRepresentation"
+    />
+<Button
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="Change"
+    android:inputType="number"
+    android:id="@+id/charRepButton" 
+    />
+</LinearLayout>
 </LinearLayout>
