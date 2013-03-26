@@ -34,19 +34,27 @@
     <br.com.sapereaude.maskedEditText.MaskedEditText
     android:layout_width="0dp" 
     android:layout_height="wrap_content" 
-    android:layout_weight="3"
+    android:layout_weight="1"
     custom_edit:mask="abababab"
     android:hint="abababab"
     app:char_representation="a"
-	android:id="@+id/charRepresentation"
+	android:id="@+id/changingText"
     />
 <Button
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:text="Change"
+    android:text="Representation"
     android:inputType="number"
     android:id="@+id/charRepButton" 
+    />
+<Button
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="Mask"
+    android:inputType="number"
+    android:id="@+id/maskButton" 
     />
 </LinearLayout>
 </LinearLayout>

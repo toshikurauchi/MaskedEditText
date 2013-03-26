@@ -12,14 +12,27 @@ public class MaskedEditTextExampleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        final MaskedEditText charRepresentationText = (MaskedEditText) findViewById(R.id.charRepresentation);
+        final MaskedEditText changingText = (MaskedEditText) findViewById(R.id.changingText);
         findViewById(R.id.charRepButton).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(charRepresentationText.getCharRepresentation() == 'a')
-					charRepresentationText.setCharRepresentation('b');
-				else if(charRepresentationText.getCharRepresentation() == 'b')
-					charRepresentationText.setCharRepresentation('a');
+				if(changingText.getCharRepresentation() == 'a')
+					changingText.setCharRepresentation('b');
+				else if(changingText.getCharRepresentation() == 'b')
+					changingText.setCharRepresentation('a');
+			}
+		});
+        findViewById(R.id.maskButton).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(changingText.getMask().equals("abababab")) {
+					changingText.setMask("aabbaabb");
+					changingText.setHint("aabbaabb");
+				}
+				else if(changingText.getMask().equals("aabbaabb")) {
+					changingText.setMask("abababab");
+					changingText.setHint("abababab");
+				}
 			}
 		});
     }
