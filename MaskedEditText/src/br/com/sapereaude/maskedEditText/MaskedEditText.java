@@ -26,6 +26,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	private boolean ignore;
 	protected int maxRawLength;
 	private int lastValidMaskPosition;
+	private boolean selectionChanged;
 	
 	public MaskedEditText(Context context) {
 		super(context);
@@ -87,6 +88,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if(hasFocus() && (rawText.length() > 0 || !hasHint())) {
+					selectionChanged = false;
 					MaskedEditText.this.setSelection(lastValidPosition());
 				}
 			}
@@ -226,6 +228,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				setText(makeMaskedText());
 			}
 			
+			selectionChanged = false;
 			setSelection(selection);
 			
 			editingBefore = false;
@@ -237,7 +240,9 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	
 	@Override
 	protected void onSelectionChanged(int selStart, int selEnd) {
-		if(initialized) {
+		// On Android 4+ this method is being called more than 1 time if there is a hint in the EditText, what moves the cursor to left
+		// Using the boolean var selectionChanged to limit to one execution
+		if(initialized && !selectionChanged) {
 			if(rawText.length() == 0 && hasHint()) {
 				selStart = 0;
 				selEnd = 0;
@@ -247,6 +252,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				selEnd = fixSelection(selEnd);
 			}
 			setSelection(selStart, selEnd);
+			selectionChanged = true;
 		}
 		super.onSelectionChanged(selStart, selEnd);
 	}
