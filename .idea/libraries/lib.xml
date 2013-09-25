@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/MaskedEditTextTest/lib/mockito-all-1.9.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/MaskedEditTextTest/lib/robolectric-1.2-20120923.180004-130-jar-with-dependencies.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
