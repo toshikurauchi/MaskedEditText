@@ -27,7 +27,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	protected int maxRawLength;
 	private int lastValidMaskPosition;
 	private boolean selectionChanged;
-	private OnFocusChangeListener mFocusChangeListener;
+	private OnFocusChangeListener focusChangeListener;
 	
 	public MaskedEditText(Context context) {
 		super(context);
@@ -64,7 +64,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	 * related to this event. */
 	@Override
 	public void setOnFocusChangeListener(OnFocusChangeListener listener) {
-		mFocusChangeListener = listener;
+		focusChangeListener = listener;
 	}
 	
 	private void cleanUp() {
@@ -95,8 +95,8 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		super.setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				if (mFocusChangeListener != null) {
-					mFocusChangeListener.onFocusChange(v, hasFocus);
+				if (focusChangeListener != null) {
+					focusChangeListener.onFocusChange(v, hasFocus);
 				}
 					
 				if(hasFocus() && (rawText.length() > 0 || !hasHint())) {
