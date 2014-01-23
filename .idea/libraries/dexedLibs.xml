@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="dexedLibs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/MaskedEditTextExample/bin/dexedLibs/annotations-72e90cde5a5d7a04542f912bf113d6ee.jar!/" />
+      <root url="jar://$PROJECT_DIR$/MaskedEditTextExample/bin/dexedLibs/maskededittext-8b9953671185ad70b785069cab445eff.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
