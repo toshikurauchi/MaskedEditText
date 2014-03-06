@@ -242,17 +242,25 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	protected void onSelectionChanged(int selStart, int selEnd) {
 		// On Android 4+ this method is being called more than 1 time if there is a hint in the EditText, what moves the cursor to left
 		// Using the boolean var selectionChanged to limit to one execution
-		if(initialized && !selectionChanged) {
-			if(rawText.length() == 0 && hasHint()) {
-				selStart = 0;
-				selEnd = 0;
+		if(initialized ){
+			if(!selectionChanged) {
+		
+				if(rawText.length() == 0 && hasHint()) {
+					selStart = 0;
+					selEnd = 0;
+				}
+				else {
+					selStart = fixSelection(selStart);
+					selEnd = fixSelection(selEnd);
+				}
+				setSelection(selStart, selEnd);
+				selectionChanged = true;
 			}
-			else {
-				selStart = fixSelection(selStart);
-				selEnd = fixSelection(selEnd);
+			else{//check to see if the current selection is outside the already entered text
+				if(selStart > rawText.length() - 1){
+					setSelection(fixSelection(selStart),fixSelection(selEnd));
+				}
 			}
-			setSelection(selStart, selEnd);
-			selectionChanged = true;
 		}
 		super.onSelectionChanged(selStart, selEnd);
 	}
