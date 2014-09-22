@@ -5,8 +5,10 @@ import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -54,8 +56,14 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		// Ignoring enter key presses
 		setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				return true;
+			public boolean onEditorAction(TextView v, int actionId,KeyEvent event) {
+				switch (actionId) {
+				case EditorInfo.IME_ACTION_NEXT:
+					// fixing actionNext
+					return false;
+				default:
+					return true;
+				}
 			}
 		});
 	}
