@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -277,7 +276,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				selectionChanged = true;
 			}
 			else{//check to see if the current selection is outside the already entered text
-				if(selStart > rawText.length() - 1){
+				if(!(hasHint() && rawText.length() == 0) && selStart > rawText.length() - 1){
 					setSelection(fixSelection(selStart),fixSelection(selEnd));
 				}
 			}

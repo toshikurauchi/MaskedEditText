@@ -14,6 +14,14 @@
 <br.com.sapereaude.maskedEditText.MaskedEditText
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
+    custom_edit:mask="(cc) cccc-cccc"
+    custom_edit:char_representation="c"
+    android:hint="(11) 1111-1111"
+	android:id="@+id/phoneEditWithHint"
+    />
+<br.com.sapereaude.maskedEditText.MaskedEditText
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
     custom_edit:mask="###.###.###-##"
     android:inputType="number"
 	android:id="@+id/cpfEdit"
