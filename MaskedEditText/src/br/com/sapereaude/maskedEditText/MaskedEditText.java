@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class MaskedEditText extends EditText implements TextWatcher {
 
 	private String mask;
+	private char maskFill;
 	private char charRepresentation;
 	private int[] rawToMask;
 	private RawText rawText;
@@ -41,6 +42,10 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MaskedEditText);
 		mask = attributes.getString(R.styleable.MaskedEditText_mask);
+		
+		String maskFill = attributes.getString(R.styleable.MaskedEditText_mask_fill);
+		this.maskFill = (maskFill != null && maskFill.length() > 0) ? maskFill.charAt(0) : ' ';
+
 		String representation = attributes.getString(R.styleable.MaskedEditText_char_representation);
 		
 		if(representation == null) {
@@ -325,7 +330,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 				maskedText[rawToMask[i]] = rawText.charAt(i);
 			}
 			else {
-				maskedText[rawToMask[i]] = ' ';
+				maskedText[rawToMask[i]] = maskFill;
 			}
 		}
 		return new String(maskedText);

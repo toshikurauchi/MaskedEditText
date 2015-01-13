@@ -31,6 +31,16 @@ You can optionally set the representation character (in case you don't want to u
         mask:char_representation="c"
     />
 
+You can also optionally replace the ` ` character on the mask for any kind of character:
+
+    <br.com.sapereaude.maskedEditText.MaskedEditText 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        mask:mask="ccc.ccc.ccc-cc"
+        mask:char_representation="c"
+        mask:mask_fill="_"
+    />
+
 You can also change the mask and the representation character programatically:
 
 	MaskedEditText editText = (MaskedEditText) findViewById(R.id.my_edit_text)
@@ -72,6 +82,16 @@ Caso seja do seu interesse você pode mudar o caracter de representação (se vo
         android:layout_height="wrap_content"
         mask:mask="ccc.ccc.ccc-cc"
         mask:char_representation="c"
+    />
+
+Você também pode mudar o character ` ` que é utilizado para representar espaço em branco na máscara:
+
+    <br.com.sapereaude.maskedEditText.MaskedEditText 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        mask:mask="ccc.ccc.ccc-cc"
+        mask:char_representation="c"
+        mask:mask_fill="_"
     />
 
 Você também pode mudar a máscara e o caracter de representação programaticamente:
