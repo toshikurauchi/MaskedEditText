@@ -38,7 +38,7 @@ You can also optionally replace the ` ` character on the mask for any kind of ch
         android:layout_height="wrap_content"
         mask:mask="ccc.ccc.ccc-cc"
         mask:char_representation="c"
-	mask:mask_fill="_"
+        mask:mask_fill="_"
     />
 
 You can also change the mask and the representation character programatically:
@@ -91,7 +91,7 @@ Você também pode mudar o character ` ` que é utilizado para representar espa�
         android:layout_height="wrap_content"
         mask:mask="ccc.ccc.ccc-cc"
         mask:char_representation="c"
-	mask:mask_fill="_"
+        mask:mask_fill="_"
     />
 
 Você também pode mudar a máscara e o caracter de representação programaticamente:
