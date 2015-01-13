@@ -42,8 +42,9 @@ public class MaskedEditText extends EditText implements TextWatcher {
 		
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MaskedEditText);
 		mask = attributes.getString(R.styleable.MaskedEditText_mask);
+		
 		String maskFill = attributes.getString(R.styleable.MaskedEditText_mask_fill);
-		this.maskFill = (maskFill != null) ? maskFill.charAt(0) : ' ';
+		this.maskFill = (maskFill != null && maskFill.length() > 0) ? maskFill.charAt(0) : ' ';
 
 		String representation = attributes.getString(R.styleable.MaskedEditText_char_representation);
 		
