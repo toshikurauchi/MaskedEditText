@@ -3,6 +3,7 @@ package br.com.sapereaude.maskedEditText;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -80,6 +81,9 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	}
 	
 	private void cleanUp() {
+        if (mask == null) {
+            return;
+        }
 		initialized = false;
 		
 		generatePositionArrays();
@@ -94,7 +98,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 			this.setText(null);
 		}
 		else {
-			this.setText(mask.replace(charRepresentation, ' '));
+			this.setText(mask.replace(charRepresentation, maskFill));
 		}
 		editingBefore = false;
 		editingOnChanged = false;
@@ -167,7 +171,7 @@ public class MaskedEditText extends EditText implements TextWatcher {
 			}
 			else {
 				String charAsString = Character.toString(currentChar);
-				if(!charsInMaskAux.contains(charAsString)) {
+				if(!charsInMaskAux.contains(charAsString) && !Character.isLetter(currentChar) && !Character.isDigit(currentChar)) {
 					charsInMaskAux = charsInMaskAux.concat(charAsString);
 				}
 				maskToRaw[i] = -1;
@@ -186,11 +190,15 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	
 	private void init() {
 		addTextChangedListener(this);
+        this.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 	}
 	
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
+        if (mask == null) {
+            return;
+        }
 		if(!editingBefore) {
 			editingBefore = true;
 			if(start > lastValidMaskPosition) {
@@ -219,6 +227,9 @@ public class MaskedEditText extends EditText implements TextWatcher {
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (mask == null) {
+            return;
+        }
 		if(!editingOnChanged && editingBefore) {
 			editingOnChanged = true;
 			if(ignore) {
@@ -242,6 +253,9 @@ public class MaskedEditText extends EditText implements TextWatcher {
 
 	@Override
 	public void afterTextChanged(Editable s) {
+        if (mask == null) {
+            return;
+        }
 		if(!editingAfter && editingBefore && editingOnChanged) {
 			editingAfter = true;
 			if(rawText.length() == 0 && hasHint()) {
@@ -266,6 +280,10 @@ public class MaskedEditText extends EditText implements TextWatcher {
 	protected void onSelectionChanged(int selStart, int selEnd) {
 		// On Android 4+ this method is being called more than 1 time if there is a hint in the EditText, what moves the cursor to left
 		// Using the boolean var selectionChanged to limit to one execution
+        if (mask == null) {
+            super.onSelectionChanged(selStart, selEnd);
+            return;
+        }
 		if(initialized ){
 			if(!selectionChanged) {
 		
