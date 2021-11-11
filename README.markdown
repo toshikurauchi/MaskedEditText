@@ -1,3 +1,9 @@
+```diff
+- This is a project I've created many years ago. I'm not sure if it still works, 
+- but unfortunately I don't have time to maintain it.
+- I'm archiving it for now.
+```
+
 # MaskedEditText
 
 *************************************************************************************************
